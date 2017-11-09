@@ -18,7 +18,7 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php include '../index/admin_nav_bar.php'?>
+    <?php  session_start(); include '../index/admin_nav_bar.php'?>
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="panel panel-default">
@@ -31,9 +31,14 @@
                             <thead><tr><th>Student ID</th><th>Student name</th><th>Year</th></tr></thead>
                             <?php
                             include '../Connect/Connect.php';
-                            $hall=$_GET['hall'];
-                            $room=$_GET['room'];
-                            $sql="select id, first_name, last_name, year from stays NATURAL JOIN person where room_number=$room AND hall_id=$hall ORDER by year desc";
+                            if($_SESSION['role']=='student'){
+                                $hall=$_GET['hall'];
+                                $room=$_GET['room'];
+                            }else if($_SESSION['role']=='admin'){
+                                $hall=$_GET['hall'];
+                                $room=$_GET['room'];
+                            }
+                            $sql="select id, first_name, last_name, year from student_stay where room_number='$room' AND name='$hall' ORDER by year desc";
                             $result = $link->query($sql);
                             while($row = $result->fetch_assoc()) {
                                 echo "<tr><td>" . $row["id"]."</td><td>" . $row["first_name"]." ".$row["last_name"]. "</td><td>" . $row["year"]. "</td></tr>";

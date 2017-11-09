@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>View Hall</title>
+    <title>Student</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -18,34 +18,40 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php
-    session_start();
-    if($_SESSION['role']=='student'){
-        include '../index/student_nav_bar.php';
-    }elseif ($_SESSION['role']=='admin'){
-        include '../index/admin_nav_bar.php';
-    }?>
+    <?php include '../index/admin_nav_bar.php'?>
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="panel panel-default">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Hall Details
-                    </div>
+                <div class="col-md-12">
+                    <h1 class="page-head-line">Student Requests</h1>
+                </div>
+                <?php
+                include '../Connect/Connect.php';
+                $sql = "select * from requestroom ORDER BY hall_name";
+                $result = $link->query($sql); ?>
+                <div class="row">
                     <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead><tr><th>Hall Name</th><th>Type</th><th>Capacity</th><th>No of Rooms</th></tr></thead>
-                                <?php
-                                include '../Connect/Connect.php';
-                                $sql="select * from hall";
-                                $result = $link->query($sql);
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr><td>" . $row["name"]."</td><td>" . $row["type"]. "</td><td>" . $row["capacity"]. "</td><td>". $row["no_of_rooms"]."</td></tr>";
-                                }
-                                ?>
-                            </table>
-                        </div>
+                        <form role="form" action="acceptRoom.php" method="get">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Hall ID</th>
+                                        <th>Student ID</th>
+                                        <th>Student Name</th>
+                                        <th>Address</th>
+                                        <th>Department</th>
+                                        <th>Year</th>
+                                        <th>Decision</th>
+                                    </tr>
+                                    </thead>
+                                    <?php
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr><td>" . $row["hall_name"] . "</td><td>" . $id=$row["id"] . "</td><td>"  . $row["first_name"] . "</td><td>"  . $row["address_number"] . "</td><td>" . $row["department"]  . "</td><td>" . $row["year"] . "</td><td>" ."<a href='accept.php?id=".$row['id']."'>Accept</a>"."    "."<a href='deny.php?id=".$row['id']."'>     Reject</a>"."</td></tr>";
+                                    } ?>
+                                </table>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -65,6 +71,7 @@
             <div class = 'footer3'><i>copyright : Codmax</i></div>
         </footer>
     </div>
+
     <!-- /. PAGE WRAPPER  -->
 </div>
 <!-- /. WRAPPER  -->

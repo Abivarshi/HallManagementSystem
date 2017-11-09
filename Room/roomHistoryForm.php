@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <div class="col-sm-8">
                                 <div class="form-group">
-                                    <label>Hall name </label>
+                                    <label>Hall Name </label>
                                     <input class="form-control" type="text" name="hall">
                                 </div>
                                 <div class="form-group">

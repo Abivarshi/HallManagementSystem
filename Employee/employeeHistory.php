@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>View Hall</title>
+    <title>Student</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -18,34 +18,27 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php
-    session_start();
-    if($_SESSION['role']=='student'){
-        include '../index/student_nav_bar.php';
-    }elseif ($_SESSION['role']=='admin'){
-        include '../index/admin_nav_bar.php';
-    }?>
+    <?php include '../index/admin_nav_bar.php'?>
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="panel panel-default">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Hall Details
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead><tr><th>Hall Name</th><th>Type</th><th>Capacity</th><th>No of Rooms</th></tr></thead>
-                                <?php
-                                include '../Connect/Connect.php';
-                                $sql="select * from hall";
-                                $result = $link->query($sql);
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr><td>" . $row["name"]."</td><td>" . $row["type"]. "</td><td>" . $row["capacity"]. "</td><td>". $row["no_of_rooms"]."</td></tr>";
-                                }
-                                ?>
-                            </table>
-                        </div>
+                <div class="col-md-12">
+                    <h1 class="page-head-line">Employee History</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Employee ID</th><th>Hall ID</th><th>Date</th></tr></thead>
+                            <?php
+                            include '../Connect/Connect.php';
+                            $e_ID=$_GET['e_id'];
+                            $sql="select id, first_name, last_name, hall_id, date from works NATURAL JOIN person where id=$e_ID ORDER by date desc";
+                            $result = $link->query($sql);
+                            while($row = $result->fetch_assoc()) {
+                                echo "<tr><td>" . $row["id"]."</td><td>" . $row["hall_id"]. "</td><td>" . $row["date"]. "</td></tr>";
+                            }
+                            ?>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -67,6 +60,7 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
+
 <!-- /. WRAPPER  -->
 
 <!-- /. FOOTER  -->

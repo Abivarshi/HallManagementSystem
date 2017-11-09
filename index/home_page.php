@@ -1,5 +1,6 @@
 ﻿<?php session_start();
-include_once('../Connect/Connect.php');?>
+include_once('../Connect/Connect.php');
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -154,9 +155,8 @@ include_once('../Connect/Connect.php');?>
                                         $username1 = $_GET['username'];
                                         $password = $_GET['password'];
                                         $password_md5 = md5($_GET['password']);
-
                                         if (!empty($username1) && !empty($password)){
-                                            $query = "SELECT id,role FROM user WHERE id ='$username1' AND password = '$password'";
+                                            $query = "SELECT id,role FROM user WHERE id ='$username1' AND password = '$password_md5'";
                                             if($query_run = mysqli_query($link,$query)){
                                                 if (mysqli_num_rows($query_run)==0){
                                                     $message = 'username and password are unmatched';

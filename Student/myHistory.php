@@ -39,10 +39,10 @@
                                 <?php session_start();
                                 include '../Connect/Connect.php';
                                 $id = $_SESSION['id'];
-                                $sql = "select * from stays where id='$id' ORDER by year desc";
+                                $sql = "select * from student_stay where id='$id' ORDER by year desc";
                                 $result = $link->query($sql);
                                 while ($row = $result->fetch_assoc()) {
-                                    echo "<tr><td>" . $row["hall_id"] . "</td><td>" . $row["room_number"] . "</td><td>" . $row["year"] . "</td></tr>";
+                                    echo "<tr><td>" . $row["name"] . "</td><td>" . $row["room_number"] . "</td><td>" . $row["year"] . "</td></tr>";
                                 }
                                 ?>
                             </table>

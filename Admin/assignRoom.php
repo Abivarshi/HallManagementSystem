@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Hall Management System</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -18,95 +18,99 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php include '../index/admin_nav_bar.php'?>
+    <?php include "../index/admin_nav_bar.php";?>
     <div id="page-wrapper">
         <div id="page-inner">
-            <div class="panel panel-default">
+            <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-head-line">Student Requests</h1>
+                    <h1 class="page-head-line">Assign Rooms</h1>
                 </div>
-                <?php
-                include '../Connect/Connect.php';
-                $sql = "select * from requestroom ORDER BY hall_id";
-                $result = $link->query($sql); ?>
-                <div class="row">
-                    <div class="panel-body">
-                        <form role="form" action="assignRoom.php" method="get">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Hall ID</th>
-                                        <th>Student ID</th>
-                                        <th>Student Name</th>
-                                        <th>Department</th>
-                                        <th>Year</th>
-                                        <th>Decision</th>
-                                    </tr>
-                                    </thead>
-                                    <?php
-                                    function accept($id){
-                                        include '../Connect/Connect.php';
-                                        $query="select * from requestroom where id=$id";
-                                        $result = mysqli_query($connect,$query);
-                                        while ($line = mysqli_fetch_array($result)){
-                                            $Name=$line['name'];
-                                            $Address=$line['address'];
-                                            $Gender = $line['gender'];
-                                            $Date_of_Birth=$line['date_of_birth'];
-                                            $Department=$line['department'];
-                                            $Balance=$line['balance'];
-                                            $Hall_name=$line['hall_name'];
-                                            $Room=$line['room_number'];
-                                        }
-                                        $query_1 = "INSERT INTO requestroom(student_name,id,department,address,email,other_info)VALUES()";
-                                        $result = mysqli_query($connect,$query_1);
-                                    }
-                                    function deny($id){
-                                        include '../Connect/Connect.php';
-                                        $q="DELETE FROM requestroom WHERE id=$id";
-                                        $r = mysqli_query($connect,$q);
-                                    }
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr><td>" . $row["hall_id"] . "</td><td>" . $id=$row["id"] . "</td><td>"  . $row["student_name"] . "</td><td>" . $row["department"]  . "</td><td>" . $row["year"] . "</td><td>" ."<button onclick='accept($id)' class=\"btn btn-danger\">Accept</button>"."<button onclick='deny($id)' class=\"btn btn-danger\">Deny</button>"."</td></tr>";
-                                    } ?>
-                                </table>
+                <div class="panel-body">
+                    <form action="assignRoom.php" method="get">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label>Hall Name</label>
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-sm-8">
+                                <select class="form-control"name="hallName"/>
+                                <option value="">Select Here:</option>
+                                <?php
+                                include('../Connect/Connect.php');
+                                $sql="SELECT name FROM hall";
+                                $result = $link->query($sql);
+
+                                while($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                                    <?php
+                                    // close while loop
+                                }
+                                ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" name="submit" class="btn btn-info">Submit </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    include('../Connect/Connect.php');
+                    if(isset($_GET['submit']) && !empty($_GET["hallName"]))
+                    {
+                        $sql = "select room_number,(room_capacity-(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)) as vacancy from room natural join hall where name='$_GET[hallName]' and room_capacity>(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)";
+                        $result = $link->query($sql);
+                        if ($result->num_rows > 0) {
+                            echo "<table class='table table-striped table-bordered table-hover'><tr><th>Room Number</th><th>Vacancy</th><th></th></tr>";
+                            // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                echo "<tr><td>" . $row["room_number"]. "</td><td>" . $row["vacancy"]. "</td><td><a href='assignRoomStudent.php?roomNumber=".$row["room_number"]."&hallName=".$_GET["hallName"]."'>Assign Room</a></td></tr>";
+                            }
+                        } else {
+                            echo "No Rooms Available";
+                        }
+                    }
+                    if(isset($_GET['assignSubmit']))
+                    {
+                        $hall_name=$_GET['hallName'];
+                        $id=$_GET['id'];
+                        $room=$_GET['roomNumber'];
+                        $year=(int)$_GET['year'];
+                        $hallQuery="select hall_id from hall where name='$hall_name'";
+                        $hallQuery=mysqli_query($link,$hallQuery);
+                        $hallQuery=mysqli_fetch_array($hallQuery);
+                        $hallId=$hallQuery['hall_id'];
+                        $query="insert into stays(id,hall_id,room_number,year)values('$id','$hallId','$room',$year)";
+                        $query1=mysqli_query($link,$query);
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>
         <!-- /. PAGE INNER  -->
-        <footer>
-            <div class = 'footer1'>
-                <b>Address</b><br/>
-                University of Sumanadasa,<br/>
-                Moratuwa.
-            </div>
-            <div class = 'footer2'>
-                <b>Contact Us</b><br/>
-                Email : uos@gmail.com<br />
-                Tel: Principal office: +940112220000
-            </div>
-            <div class = 'footer3'><i>copyright : Codmax</i></div>
-        </footer>
     </div>
-
     <!-- /. PAGE WRAPPER  -->
 </div>
 <!-- /. WRAPPER  -->
 
+<div id="footer-sec">
+
+</div>
 <!-- /. FOOTER  -->
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
-<script src="../assets/js/jquery-1.10.2.js"></script>
+<script src="assets/js/jquery-1.10.2.js"></script>
 <!-- BOOTSTRAP SCRIPTS -->
-<script src="../assets/js/bootstrap.js"></script>
+<script src="assets/js/bootstrap.js"></script>
 <!-- METISMENU SCRIPTS -->
-<script src="../assets/js/jquery.metisMenu.js"></script>
+<script src="assets/js/jquery.metisMenu.js"></script>
 <!-- CUSTOM SCRIPTS -->
-<script src="../assets/js/custom.js"></script>
+<script src="assets/js/custom.js"></script>
+
 
 
 </body>

@@ -18,7 +18,46 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php include '../index/student_nav_bar.php' ?>
+    <?php
+    session_start();
+    if(isset($_SESSION['id'])){
+        if($_SESSION['role']=='student'){
+            include '../index/student_nav_bar.php';
+        }elseif ($_SESSION['role']=='admin') {
+            include '../index/admin_nav_bar.php';
+        }
+    }else{
+        ?>
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+
+            </div>
+        </nav>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a class="active-menu" href="home_page.php"><i class="fa fa-dashboard "></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-desktop "></i>Rooms <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="../Room/viewAvailableRooms.php"><i class="fa fa-toggle-on"></i>Available Rooms</a>
+                            </li>
+                            <li>
+                                <a href="../Student/requestRoom.php"><i class="fa fa-bell "></i>Request Room</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <!-- /. NAV SIDE  -->
+    <?php
+    }?>
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="row">
@@ -26,7 +65,7 @@
                     <h1 class="page-head-line">Available Rooms</h1>
                 </div>
                 <div class="panel-body">
-                    <form action="viewAvailableRooms.php" method="post">
+                    <form action="viewAvailableRooms.php" method="get">
                         <div class="form-group">
                             <div class="col-sm-2">
                                 <label>Hall Name</label>
@@ -38,11 +77,9 @@
                                 include('../Connect/Connect.php');
                                 $sql="SELECT name FROM hall";
                                 $result = $link->query($sql);
-
                                 while($row = $result->fetch_assoc()) {
                                     ?>
                                     <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-
                                     <?php
                                     // close while loop
                                 }
@@ -90,9 +127,10 @@
 
                     <?php
                     include('../Connect/Connect.php');
-                    if(isset($_POST['submit']) && !empty($_POST["hallName"]))
+                    if(isset($_GET['submit']) && !empty($_GET["hallName"]))
                     {
-                        $sql = "select room_number,(room_capacity-(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)) as vacancy from room natural join hall where name='$_POST[hallName]' and room_capacity>(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)";
+                        $_SESSION['hallName']=$_GET["hallName"];
+                        $sql = "select room_number,(room_capacity-(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)) as vacancy from room natural join hall where name='$_GET[hallName]' and room_capacity>(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)";
                         $result = $link->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -102,71 +140,77 @@
                                 echo "<tr><td>" . $row["room_number"]. "</td><td>" . $row["vacancy"]. "</td></tr>";
                             }
                             echo "</table><button type='button' class='btn btn-info ' data-toggle='modal' data-target='#myModal'>Request Room</button>
-
 							<!-- Modal -->
-							  <div class='modal fade' id='myModal' role='dialog'>
-								<div class='modal-dialog'>
-								
-								  <!-- Modal content-->
-								  <div class='modal-content'>
-									<div class='modal-header'>
-									  <button type='button' class='close' data-dismiss='modal'>&times;</button>
-									  <h4 class='modal-title'>Please enter your details to request room in ". $_POST["hallName"]. "</h4>
+							<div class='modal fade' id='myModal' role='dialog'>
+							    <div class='modal-dialog'>								
+								    <!-- Modal content-->
+							        <div class='modal-content'>
+									    <div class='modal-header'>
+									    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+									    <h4 class='modal-title'>Please enter your details to request room in ". $_GET["hallName"]."</h4>
 									</div>
 									<div class='panel-body'>
-										<form action='viewAvailableRooms.php' method='post'>
-                                        <div class='form-group'>
-                                            <label>Student Id</label>
-                                            <input class='form-control' name='id'size='100' type='text'>
-                                        </div>
-										<div class='form-group'>
-                                            <label>Name</label>
-                                            <input class='form-control' name='name' type='text'>
-                                        </div>
-										<div class='form-group'>
-                                            <label>Department</label>
-                                            <input class='form-control'name='department' type='text'>
-                                        </div>										
-										<div class='form-group'>
-                                            <label>Year</label>
-                                            <input class='form-control' name='year'type='text'>
-                                        </div>
-										<div class='form-group'>
-                                            <label>Adderss</label>
-                                            <input class='form-control' name='address' type='text'>
-                                        </div>
-										<div class='form-group'>
-                                            <label>Email Address</label>
-                                            <input class='form-control'name='email' type='text'>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Other Information</label>
-                                            <textarea class='form-control' name='other_info'rows='3'></textarea>
-                                        </div>
-                                  
-                                 
-                                        <button type='submit' class='btn btn-info' name='requestRoom'>Send Request </button>
-
-                                    </form>
-                            </div>
+										<form action='viewAvailableRooms.php' method='get'>
+                                            <div class='form-group'>
+                                                <label>Student Id</label>
+                                                <input class='form-control' name='id'size='100' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>First Name</label>
+                                                <input class='form-control' name='first_name' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Last Name</label>
+                                                <input class='form-control'name='last_name' type='text'>
+                                            </div>										
+                                            <div class='form-group'>
+                                                <label>Address Number</label>
+                                                <input class='form-control' name='address_number'type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Addrss Street</label>
+                                                <input class='form-control' name='address_street' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Address City</label>
+                                                <input class='form-control'name='address_city' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Address Country</label>
+                                                <input class='form-control'name='address_country' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Department</label>
+                                                <input class='form-control'name='department' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Date of Birth</label>
+                                                <input class='form-control'name='date_of_birth' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Gender</label>
+                                                <input class='form-control'name='gender' type='text'>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Email</label>
+                                                <input class='form-control'name='email' type='text'>
+                                            </div>
+                                            <button type='submit' class='btn btn-info' name='requestRoom'>Send Request </button>
+                                        </form>
+                                    </div>
 									<div class='modal-footer'>
-									  <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+									    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
 									</div>
-								  </div>
-								  
-								</div>
-							  </div>";
+							    </div> 
+						    </div>";
                         } else {
                             echo "No Rooms Available";
                         }
                     }
-                    if(isset($_POST['requestRoom']))
+                    if(isset($_GET['requestRoom']))
                     {
-                        $time = time();
-
-                        $query = "INSERT INTO requestroom(student_name,id,department,address,email,other_info)VALUES('$_POST[name]','$_POST[id]','$_POST[department]','$_POST[address]','$_POST[email]','$_POST[other_info]')";
+                        $query = "INSERT INTO requestroom(hall_name,id,first_name,last_name,address_number,address_street,address_city,address_country,department,date_of_birth,gender,email)VALUES('$_SESSION[hallName]','$_GET[id]','$_GET[first_name]','$_GET[last_name]','$_GET[address_number]','$_GET[address_street]','$_GET[address_city]','$_GET[address_country]','$_GET[department]','$_GET[date_of_birth]','$_GET[gender]','$_GET[email]')";
                         $result=mysqli_query($link,$query);
-
                     }
                     $link->close();
                     ?>

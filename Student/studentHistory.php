@@ -38,7 +38,7 @@
                 include '../Connect/Connect.php';
                 if(isset($_GET['id'])) {
                     $id = $_GET['id'];
-                    $sql = "select * from stays where id='$id' ORDER by year desc";
+                    $sql = "select * from student_stay where id='$id' ORDER by year desc";
                     $result = $link->query($sql); ?>
                     <div class="row">
                         <div class="panel-body">
@@ -53,7 +53,7 @@
                                     </thead>
                                     <?php
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr><td>" . $row["hall_id"] . "</td><td>" . $row["room_number"] . "</td><td>" . $row["year"] . "</td></tr>";
+                                        echo "<tr><td>" . $row["name"] . "</td><td>" . $row["room_number"] . "</td><td>" . $row["year"] . "</td></tr>";
                                     }
                 } ?>
                             </table>

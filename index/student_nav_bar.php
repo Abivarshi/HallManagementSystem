@@ -32,15 +32,15 @@
                         <a href="../Room/viewAvailableRooms.php"><i class="fa fa-square-o "></i>Available Rooms</a>
                     </li>
                     <li>
-                        <a href="../Room/vacateRoom.php"><i class="fa fa-square-o "></i>Vacate Room</a>
+                        <a href="#"><i class="fa fa-square-o "></i>Vacate Room</a>
                     </li>
                     <li>
-                        <a href="../Student/changeRoomRequest.php"><i class="fa fa-square-o "></i>Change Room</a>
+                        <a href="#"><i class="fa fa-square-o "></i>Change Room</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-desktop "></i>My Detail <span class="fa arrow"></span></a>
+                <a href="../Student/myDetail.php"><i class="fa fa-desktop "></i>My Detail <span class="fa arrow"></span></a>
             </li>
             <li>
                 <a href="../Student/myHistory.php"><i class="fa fa-desktop "></i>My History <span class="fa arrow"></span></a>

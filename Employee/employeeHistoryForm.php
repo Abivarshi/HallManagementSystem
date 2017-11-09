@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>View Hall</title>
+    <title>Student</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -18,35 +18,27 @@
 </head>
 <body>
 <div id="wrapper">
-    <?php
-    session_start();
-    if($_SESSION['role']=='student'){
-        include '../index/student_nav_bar.php';
-    }elseif ($_SESSION['role']=='admin'){
-        include '../index/admin_nav_bar.php';
-    }?>
+    <?php include '../index/admin_nav_bar.php'?>
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="panel panel-default">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Hall Details
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead><tr><th>Hall Name</th><th>Type</th><th>Capacity</th><th>No of Rooms</th></tr></thead>
-                                <?php
-                                include '../Connect/Connect.php';
-                                $sql="select * from hall";
-                                $result = $link->query($sql);
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr><td>" . $row["name"]."</td><td>" . $row["type"]. "</td><td>" . $row["capacity"]. "</td><td>". $row["no_of_rooms"]."</td></tr>";
-                                }
-                                ?>
-                            </table>
+                <div class="col-md-12">
+                    <h1 class="page-head-line">Employee History</h1>
+                </div>
+                <div class="panel-body">
+                    <form action="employeeHistory.php" method="get">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label>Employee ID </label>
+                                    <input class="form-control" type="text" name="e_id">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" name="submit" class="btn btn-info">Submit </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -65,8 +57,10 @@
             <div class = 'footer3'><i>copyright : Codmax</i></div>
         </footer>
     </div>
+
     <!-- /. PAGE WRAPPER  -->
 </div>
+
 <!-- /. WRAPPER  -->
 
 <!-- /. FOOTER  -->

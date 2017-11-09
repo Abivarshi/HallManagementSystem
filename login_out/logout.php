@@ -7,5 +7,5 @@
  */
 session_start();
 session_destroy();
-header('Location: ../home_page.php');
+header('Location: ../index/home_page.php');
 ?>
