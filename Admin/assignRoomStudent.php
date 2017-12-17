@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Assign Room</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -25,7 +25,10 @@
                 <div class="col-md-12">
                     <h1 class="page-head-line"></h1>
                     <div class="panel-body">
-                        <form role="form" action="assignRoom.php" method="get">
+                        <?php
+                        $Err='';
+                        ?>
+                        <form role="form" action="assignRoomStudent.php" method="get">
                             <div class="form-group">
                                 <label>Hall Name</label>
                                 <input class="form-control" type="text" name="hallName" value="<?php echo $_GET['hallName']; ?>" readonly>
@@ -36,12 +39,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Student Id</label>
-                                <input class="form-control" type="text" name="id">
-                                <p class="help-block">Enter Student Id here.</p>
+                                <input class="form-control" type="text" name="id" pattern="[0-9]{4}" required>
+                                <p class="help-block">Enter Student Id here.<?php echo $Err;?></p>
                             </div>
                             <div class="form-group">
                                 <label>Year</label>
-                                <input class="form-control" type="text"  name="year">
+                                <input class="form-control" type="number" min=<?php echo date("Y") ?> max=<?php echo date("Y")+2; ?> name="year" required>
                                 <p class="help-block">Enter The year assigned here.</p>
                             </div>
                             <button type="submit" name="assignSubmit" class="btn btn-info">Submit </button>
@@ -49,6 +52,31 @@
                     </div>
                 </div>
             </div>
+            <?php
+            include('../Connect/Connect.php');
+            if(isset($_GET['assignSubmit']))
+            {
+
+
+                $hall_name=$_GET['hallName'];
+                $id=$_GET['id'];
+                $room=$_GET['roomNumber'];
+                $year=$_GET['year'];
+                $hallQuery="select hall_id from hall where name='$hall_name'";
+                $hallQuery=mysqli_query($link,$hallQuery);
+                $hallQuery=mysqli_fetch_array($hallQuery);
+                $hallId=$hallQuery['hall_id'];
+                $query11 = "SELECT * FROM student WHERE id='$id'";
+                $query11 = $link->query($query11);
+                $queryCount = mysqli_num_rows($query11);
+                if($queryCount > 0) {
+                    $query = "insert into stays(id,hall_id,room_number,year)values('$id','$hallId','$room',$year)";
+                    $query1 = mysqli_query($link, $query);
+                }
+                else{
+                    echo "Student does not exit";
+                }
+            }?>
         </div>
         <!-- /. PAGE INNER  -->
         <footer>

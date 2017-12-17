@@ -13,11 +13,11 @@ if(isset($_GET['id'])){
         $gender = $line['gender'];
         $dob=date($line['date_of_birth']);
         $department=$line['department'];
+        echo $f_name,$l_name,$add_country,$add_city,$add_num,$add_street,$gender,$dob,$department;
     }
-    $result_1 = mysqli_query($link,"INSERT INTO person(id,first_name,last_name,address_number,address_street,address_city,address_country,gender,date_of_birth) VALUES('$id','$f_name','$l_name','$add_num','$add_street','$add_city','$add_country','$gender',$dob)");
+    $result_1 = mysqli_query($link,"INSERT INTO person(id,first_name,last_name,address_number,address_street,address_city,address_country,gender,date_of_birth) VALUES($id,'$f_name','$l_name','$add_num','$add_street','$add_city','$add_country','$gender',$dob)");
     $result_2 = mysqli_query($link,"INSERT INTO student(id,department) VALUES('$id','$department')");
+    $result_3 = mysqli_query($link,"INSERT INTO user(id,password,role) VALUES('$id',md5('pass123'),'student')");
     $r = mysqli_query($link, "DELETE FROM requestroom WHERE id=$id");
-    if($result_2 and $result_1 and $r){
-        header('location:acceptRoom.php');
-    }
+    header('location:acceptRoom.php');
 }

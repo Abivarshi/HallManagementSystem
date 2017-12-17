@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hall Management System</title>
+    <title>Assign Room</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -73,20 +73,33 @@
                             echo "No Rooms Available";
                         }
                     }
-                    if(isset($_GET['assignSubmit']))
+                    /*if(isset($_GET['assignSubmit']))
                     {
+
+
                         $hall_name=$_GET['hallName'];
                         $id=$_GET['id'];
                         $room=$_GET['roomNumber'];
                         $year=(int)$_GET['year'];
+                        if (empty($year)) {
+                            $Err = "date is required";
+                        } else {
+                            $date_regex = '%\A(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d\z%';
+
+
+                            if (preg_match($date_regex, $test_date,$_POST['birthday']) ==true) {
+                                $Err = 'bg';
+                            }
+                        }
                         $hallQuery="select hall_id from hall where name='$hall_name'";
                         $hallQuery=mysqli_query($link,$hallQuery);
                         $hallQuery=mysqli_fetch_array($hallQuery);
                         $hallId=$hallQuery['hall_id'];
                         $query="insert into stays(id,hall_id,room_number,year)values('$id','$hallId','$room',$year)";
                         $query1=mysqli_query($link,$query);
-                    }
+                    }*/
                     ?>
+
                 </div>
             </div>
         </div>

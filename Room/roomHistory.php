@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Room History</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -31,17 +31,17 @@
                             <thead><tr><th>Student ID</th><th>Student name</th><th>Year</th></tr></thead>
                             <?php
                             include '../Connect/Connect.php';
-                            if($_SESSION['role']=='student'){
-                                $hall=$_GET['hall'];
-                                $room=$_GET['room'];
-                            }else if($_SESSION['role']=='admin'){
+                            if(isset($_GET['submit'])){
                                 $hall=$_GET['hall'];
                                 $room=$_GET['room'];
                             }
                             $sql="select id, first_name, last_name, year from student_stay where room_number='$room' AND name='$hall' ORDER by year desc";
                             $result = $link->query($sql);
+                            if(mysqli_num_rows($result)>0)
                             while($row = $result->fetch_assoc()) {
                                 echo "<tr><td>" . $row["id"]."</td><td>" . $row["first_name"]." ".$row["last_name"]. "</td><td>" . $row["year"]. "</td></tr>";
+                            }else{
+                                echo "<p style='color: red'> No room history available </p>";
                             }
                             ?>
                         </table>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Student History</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
                     <form role="form" action="studentHistory.php" method="get">
                         <div class="form-group">
                             <label>Student ID</label>
-                            <input class="form-control" type="text" name="id">
+                            <input class="form-control" type="text" name="id" pattern="[0-9]{4}" required>
                         </div>
                         <button type="submit" class="btn btn-danger">Submit </button>
                     </form>
@@ -39,7 +39,9 @@
                 if(isset($_GET['id'])) {
                     $id = $_GET['id'];
                     $sql = "select * from student_stay where id='$id' ORDER by year desc";
-                    $result = $link->query($sql); ?>
+                    $result = $link->query($sql);
+                    if(mysqli_num_rows($result)>0){
+                    ?>
                     <div class="row">
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -55,7 +57,7 @@
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr><td>" . $row["name"] . "</td><td>" . $row["room_number"] . "</td><td>" . $row["year"] . "</td></tr>";
                                     }
-                } ?>
+                }else{ echo "No result found..please check the student ID";}} ?>
                             </table>
                         </div>
                     </div>

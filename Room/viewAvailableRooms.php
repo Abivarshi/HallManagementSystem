@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Available Room</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -38,7 +38,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="home_page.php"><i class="fa fa-dashboard "></i>Dashboard</a>
+                        <a class="active-menu" href="../index/home_page.php"><i class="fa fa-dashboard "></i>Dashboard</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-desktop "></i>Rooms <span class="fa arrow"></span></a>
@@ -153,47 +153,52 @@
 										<form action='viewAvailableRooms.php' method='get'>
                                             <div class='form-group'>
                                                 <label>Student Id</label>
-                                                <input class='form-control' name='id'size='100' type='text'>
+                                                <input class='form-control' name='id' size='100' pattern=\"[0-9]{4}\" type='text' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>First Name</label>
-                                                <input class='form-control' name='first_name' type='text'>
+                                                <input class='form-control' name='first_name' pattern='[A-Za-z ]+' type='text' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Last Name</label>
-                                                <input class='form-control' name='last_name' type='text'>
+                                                <input class='form-control'name='last_name' pattern='[A-Za-z ]+' type='text' required>
                                             </div>										
                                             <div class='form-group'>
                                                 <label>Address Number</label>
-                                                <input class='form-control' name='address_number' type='text'>
+                                                <input class='form-control' name='address_number'type='text' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Addrss Street</label>
-                                                <input class='form-control' name='address_street' type='text'>
+                                                <input class='form-control' name='address_street' type='text' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address City</label>
-                                                <input class='form-control' name='address_city' type='text'>
+                                                <input class='form-control'name='address_city' type='text' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address Country</label>
-                                                <input class='form-control' name='address_country' type='text'>
+                                                <input class='form-control'name='address_country' pattern='[A-Za-z ]+' type='text' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Department</label>
-                                                <input class='form-control' name='department' type='text'>
+                                                <input class='form-control'name='department' pattern='[A-Za-z ]+' type='text' required>
+                                                <p class=\"help-block\">Eg: Level x</p>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Level</label>
+                                                <input class='form-control' name='level' type='text' pattern='level 1|level 2|level 3|level 4|Level 1|Level 2|Level 3|Level 4' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Date of Birth</label>
-                                                <input class='form-control' name='date_of_birth' type='text'>
+                                                <input class='form-control' name='date_of_birth' type='date' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Gender</label>
-                                                <input class='form-control' name='gender' type='text'>
+                                                <input class='form-control'name='gender' type='text' pattern='male|female|Male|Female' required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Email</label>
-                                                <input class='form-control'name='email' type='text'>
+                                                <input class='form-control'name='email' type='text' pattern=\"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$\" required>
                                             </div>
                                             <button type='submit' class='btn btn-info' name='requestRoom'>Send Request </button>
                                         </form>
@@ -209,8 +214,9 @@
                     }
                     if(isset($_GET['requestRoom']))
                     {
-                        $query = "INSERT INTO requestroom(hall_name,id,first_name,last_name,address_number,address_street,address_city,address_country,department,date_of_birth,gender,email)VALUES('$_SESSION[hallName]','$_GET[id]','$_GET[first_name]','$_GET[last_name]','$_GET[address_number]','$_GET[address_street]','$_GET[address_city]','$_GET[address_country]','$_GET[department]','$_GET[date_of_birth]','$_GET[gender]','$_GET[email]')";
+                        $query = "INSERT INTO requestroom(hall_name,id,first_name,last_name,address_number,address_street,address_city,address_country,department,level,date_of_birth,gender,email)VALUES('$_SESSION[hallName]','$_GET[id]','$_GET[first_name]','$_GET[last_name]','$_GET[address_number]','$_GET[address_street]','$_GET[address_city]','$_GET[address_country]','$_GET[department]','$_GET[level]','$_GET[date_of_birth]','$_GET[gender]','$_GET[email]')";
                         $result=mysqli_query($link,$query);
+
                     }
                     $link->close();
                     ?>

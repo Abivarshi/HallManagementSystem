@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Student Request</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -41,13 +41,13 @@
                                         <th>Student Name</th>
                                         <th>Address</th>
                                         <th>Department</th>
-                                        <th>Year</th>
+                                        <th>Level</th>
                                         <th>Decision</th>
                                     </tr>
                                     </thead>
                                     <?php
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr><td>" . $row["hall_name"] . "</td><td>" . $id=$row["id"] . "</td><td>"  . $row["first_name"] . "</td><td>"  . $row["address_number"] . "</td><td>" . $row["department"]  . "</td><td>" . $row["year"] . "</td><td>" ."<a href='accept.php?id=".$row['id']."'>Accept</a>"."    "."<a href='deny.php?id=".$row['id']."'>     Reject</a>"."</td></tr>";
+                                        echo "<tr><td>" . $row["hall_name"] . "</td><td>" . $id=$row["id"] . "</td><td>"  . $row["first_name"] . "</td><td>"  . $row["address_number"] . "</td><td>" . $row["department"]  . "</td><td>" . $row["level"] . "</td><td>" ."<a href='accept.php?id=".$row['id']."'>Accept</a>"."    "."<a href='deny.php?id=".$row['id']."'>     Reject</a>"."</td></tr>";
                                     } ?>
                                 </table>
                             </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Room History</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -31,11 +31,24 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <label>Hall Name </label>
-                                    <input class="form-control" type="text" name="hall">
+                                    <select class="form-control" name="hall" required/>
+                                    <option value="">Select Here:</option>
+                                    <?php
+                                    include('../Connect/Connect.php');
+                                    $sql="SELECT name FROM hall";
+                                    $result = $link->query($sql);
+                                    while($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                                        <?php
+                                        // close while loop
+                                    }
+                                    ?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Room Number </label>
-                                    <input class="form-control" type="text" name="room">
+                                    <input class="form-control" type="text" name="room" pattern="[0-9]{3}" required>
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="submit" name="submit" class="btn btn-info">Submit </button>

@@ -39,7 +39,7 @@
                         <form role="form" action="viewDetail.php" method="get">
                             <div class="form-group">
                                 <label>ID</label>
-                                <input class="form-control" type="text" name="ID">
+                                <input class="form-control" type="text" name="ID" pattern="[0-9]{4}" required>
                             </div>
                             <button type="submit" class="btn btn-danger">Submit </button>
                         </form>
@@ -49,20 +49,22 @@
                         $ID = $_GET['ID'];
                         $q1="select first_name,last_name,address_number,address_street,address_city,address_country,gender,date_of_birth,department,balance,hall.name as hall_name,room_number from (person natural join student natural join stays) join hall using(hall_id) where person.id=$ID and year=Year(now())";
                         $result = mysqli_query($link,$q1);
-                        while ($line = mysqli_fetch_array($result)){
-                            $f_Name=$line['first_name'];
-                            $l_Name=$line['last_name'];
-                            $Address_number=$line['address_number'];
-                            $Address_street=$line['address_street'];
-                            $Address_city=$line['address_city'];
-                            $Address_country=$line['address_country'];
-                            $Gender = $line['gender'];
-                            $Date_of_Birth=$line['date_of_birth'];
-                            $Department=$line['department'];
-                            $Balance=$line['balance'];
-                            $Hall_name=$line['hall_name'];
-                            $Room=$line['room_number'];
-                        }?>
+                        if(mysqli_num_rows($result)>0){
+                            while ($line = mysqli_fetch_array($result)){
+                                $f_Name=$line['first_name'];
+                                $l_Name=$line['last_name'];
+                                $Address_number=$line['address_number'];
+                                $Address_street=$line['address_street'];
+                                $Address_city=$line['address_city'];
+                                $Address_country=$line['address_country'];
+                                $Gender = $line['gender'];
+                                $Date_of_Birth=$line['date_of_birth'];
+                                $Department=$line['department'];
+                                $Balance=$line['balance'];
+                                $Hall_name=$line['hall_name'];
+                                $Room=$line['room_number'];
+                            }
+                        ?>
                 </div>
                 <div class="panel panel-danger">
                     <div class="panel-body">
@@ -94,60 +96,50 @@
                                         <h4 class='modal-title'>UPDATE DETAIL</h4>
                                     </div>
                                     <div class='panel-body'>
-                                        <form action='viewDetail.php' method='get'>
+                                        <form action='updateDetail.php' method='get'>
+                                            <div class='form-group'>
+                                                <label>Student ID</label>
+                                                <input class='form-control' name='s_id' size='100' pattern="[0-9]{4}" type='text' required value="<?php echo $ID?>">
+                                            </div>
                                             <div class='form-group'>
                                                 <label>First Name</label>
-                                                <input class='form-control' name='first_name' type='text' value="<?php echo $f_Name?>">
+                                                <input class='form-control' name='first_name'  pattern='[A-Za-z ]+' type='text' required value="<?php echo $f_Name?>">
                                             </div>
                                             <div class='form-group'>
                                                 <label>Last Name</label>
-                                                <input class='form-control' name='last_name' type='text' value="<?php echo $l_Name?>">
+                                                <input class='form-control' name='last_name' pattern='[A-Za-z ]+' type='text' required value="<?php echo $l_Name?>">
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address Number</label>
-                                                <input class='form-control' name='address_number' type='text' value="<?php echo $Address_number?>">
+                                                <input class='form-control' name='address_number' type='text' value="<?php echo $Address_number?>" required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Addrss Street</label>
-                                                <input class='form-control' name='address_street' type='text' value="<?php echo $Address_street?>">
+                                                <input class='form-control' name='address_street' type='text' value="<?php echo $Address_street?>" required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address City</label>
-                                                <input class='form-control' name='address_city' type='text' value="<?php echo $Address_city?>">
+                                                <input class='form-control' name='address_city' type='text' value="<?php echo $Address_city?>" required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address Country</label>
-                                                <input class='form-control' name='address_country' type='text' value="<?php echo $Address_country?>">
+                                                <input class='form-control' name='address_country' type='text' value="<?php echo $Address_country?>" required>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Department</label>
-                                                <input class='form-control' name='department' type='text' value="<?php echo $Department?>">
+                                                <input class='form-control' name='department' pattern='[A-Za-z ]+' type='text' required value="<?php echo $Department?>">
                                             </div>
                                             <div class='form-group'>
                                                 <label>Date of Birth</label>
-                                                <input class='form-control' name='date_of_birth' type='text' value="<?php echo $Date_of_Birth?>">
+                                                <input class='form-control' name='date_of_birth' type='date' required value="<?php echo date($Date_of_Birth)?>">
                                             </div>
                                             <div class='form-group'>
                                                 <label>Gender</label>
-                                                <input class='form-control' name='gender' type='text' value="<?php echo $Gender?>">
+                                                <input class='form-control' name='gender' pattern='male|female|Male|Female' required value="<?php echo $Gender?>">
                                             </div>
                                             <button type='submit' class='btn btn-info' name='updateStudent'>Submit </button>
                                         </form>
-                                        <?php
-                                            if(isset($_GET['updateStudent'])){
-                                                $f_Name=$_GET['first_name'];
-                                                $l_Name=$_GET['last_name'];
-                                                $Address_number=$_GET['address_number'];
-                                                $Address_street=$_GET['address_city'];
-                                                $Address_country=$_GET['address_country'];
-                                                $Gender = $_GET['gender'];
-                                                $Date_of_Birth=$_GET['date_of_birth'];
-                                                $Department=$_GET['department'];
-                                                $Balance=$_GET['balance'];
-                                                $Hall_name=$_GET['hall_name'];
-                                                $Room=$_GET['room_number'];
-                                            }
-                                        ?>
+
                                     </div>
                                     <div class='modal-footer'>
                                         <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
@@ -169,7 +161,7 @@
                                             <button type="submit" class="btn btn-info" name="YES" value="yes">YES</button>
                                             <button type="submit" class="btn btn-danger" name="NO" value="no">NO</button>
                                         </form>
-                                        <?php $_SESSION['id']=$ID; ?>
+
                                     </div>
                                     <div class='modal-footer'>
                                         <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
@@ -179,7 +171,7 @@
                         </div>
                     </div>
                 </div>
-                <?php } ?>
+                <?php }else{ echo '<p> No result found.. please check Student ID </p>'; } } ?>
             </div>
         </div>
         <!-- /. PAGE INNER  -->
