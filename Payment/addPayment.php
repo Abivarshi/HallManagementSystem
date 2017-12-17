@@ -79,7 +79,7 @@
                             $queryCount = mysqli_num_rows($query11);
                             if($queryCount > 0) {
                                 $q="INSERT INTO payment(id,year,month,date,amount) VALUES ('$ID','$year','$month',now(),'$amount')";
-                                $q1="UPDATE student set balance=balance+'$amount' where id='$ID'";
+                                $q1="UPDATE student set balance=balance-'$amount' where id='$ID'";
                                 mysqli_query($link,$q);
                                 mysqli_query($link,$q1);
                             }

@@ -78,7 +78,7 @@
                                 if($queryCount > 0) {
                                     $query="insert into works(id,hall_id,date)values('$id','$hallId','$ass_date')";
                                     $query1=mysqli_query($link,$query);
-                                    echo "<br>".'Data stored successfully'." @ ".date("Y-m-d");
+                                    echo "<br>".'Employee Assigned successfully'." @ ".date("Y-m-d");
                                 }
                                 else{
                                     $message="Employee does not exit";

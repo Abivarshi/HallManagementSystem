@@ -49,111 +49,131 @@
                     $ID = $_GET['ID'];
                     $q1="select first_name,last_name,address_number,address_street,address_city,address_country,gender,date_of_birth,salary,position,working_hours,hall.name as hall_name from (person natural join employee natural join works) join hall using(hall_id) where person.id=$ID";
                     $result = mysqli_query($link,$q1);
-                    while ($line = mysqli_fetch_array($result)){
-                        $f_Name=$line['first_name'];
-                        $l_Name=$line['last_name'];
-                        $Address_number=$line['address_number'];
-                        $Address_street=$line['address_street'];
-                        $Address_city=$line['address_city'];
-                        $Address_country=$line['address_country'];
-                        $Gender=$line['gender'];
-                        $Date_of_Birth=$line['date_of_birth'];
-                        $Salary=$line['salary'];
-                        $Position=$line['position'];
-                        $Working_hours=$line['working_hours'];
-                        $Hall=$line['hall_name'];
-                    } ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Employee Detail of <?php echo $f_Name," ",$l_Name; ?>
-                                </div>
-                                <div class="panel-body">
-                                    <dl class="dl-horizontal">
-                                        <dt>Name</dt>
-                                        <dd><?php echo $f_Name," ",$l_Name; ?></dd>
-                                        <dt>Address</dt>
-                                        <dd><?php echo $Address_number,", ",$Address_street,", ",$Address_city,", ",$Address_country;?></dd>
-                                        <dt>Gender</dt>
-                                        <dd><?php echo $Gender;?></dd>
-                                        <dt>Date of Birth</dt>
-                                        <dd><?php echo $Date_of_Birth; ?></dd>
-                                        <dt>Salary</dt>
-                                        <dd><?php echo $Salary;?></dd>
-                                        <dt>Position</dt>
-                                        <dd><?php echo $Position; ?></dd>
-                                        <dt>Working Hours</dt>
-                                        <dd><?php echo $Working_hours;?></dd>
-                                        <dt>Hall</dt>
-                                        <dd><?php echo $Hall; ?></dd>
-                                    </dl>
-                                    <button type='button' class='btn btn-info ' data-toggle='modal' data-target='#myModal'>Edit</button>
-                                    <div class='modal fade' id='myModal' role='dialog'>
-                                        <div class='modal-dialog'>
-                                            <!-- Modal content-->
-                                            <div class='modal-content'>
-                                                <div class='modal-header'>
-                                                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                                    <h4 class='modal-title'>UPDATE DETAIL</h4>
-                                                </div>
-                                                <div class='panel-body'>
-                                                    <form action='updateEmployee.php' method='get'>
-                                                        <div class='form-group'>
-                                                            <label>Employee ID</label>
-                                                            <input class='form-control' name='s_id' size='100' pattern="[0-9]{4}" type='text' required value="<?php echo $ID?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>First Name</label>
-                                                            <input class='form-control' name='first_name'  pattern='[A-Za-z ]+' type='text' required value="<?php echo $f_Name?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Last Name</label>
-                                                            <input class='form-control' name='last_name' pattern='[A-Za-z ]+' type='text' required value="<?php echo $l_Name?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Address Number</label>
-                                                            <input class='form-control' name='address_number' type='text' value="<?php echo $Address_number?>" required>
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Addrss Street</label>
-                                                            <input class='form-control' name='address_street' type='text' value="<?php echo $Address_street?>" required>
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Address City</label>
-                                                            <input class='form-control' name='address_city' type='text' value="<?php echo $Address_city?>" required>
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Address Country</label>
-                                                            <input class='form-control' name='address_country' type='text' value="<?php echo $Address_country?>" required>
-                                                        </div>
+                    $queryCount = mysqli_num_rows($result);
+                    if($queryCount > 0) {
+                        while ($line = mysqli_fetch_array($result)){
+                            $f_Name=$line['first_name'];
+                            $l_Name=$line['last_name'];
+                            $Address_number=$line['address_number'];
+                            $Address_street=$line['address_street'];
+                            $Address_city=$line['address_city'];
+                            $Address_country=$line['address_country'];
+                            $Gender=$line['gender'];
+                            $Date_of_Birth=$line['date_of_birth'];
+                            $Salary=$line['salary'];
+                            $Position=$line['position'];
+                            $Working_hours=$line['working_hours'];
+                            $Hall=$line['hall_name'];
+                        } ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Employee Detail of <?php echo $f_Name," ",$l_Name; ?>
+                                    </div>
+                                    <div class="panel-body">
+                                        <b>Name: </b>
+                                        <div id="message_2"><?php echo $f_Name," ",$l_Name; ?></div>
+                                        <b>Address: </b>
+                                        <div id="message_2"><?php echo $Address_number,", ",$Address_street,", ",$Address_city,", ",$Address_country;?></div>
+                                        <b>Gender: </b>
+                                        <div id="message_2"><?php echo $Gender; ?></div>
+                                        <b>Date_of_Birth: </b>
+                                        <div id="message_2"><?php echo $Date_of_Birth; ?></div>
+                                        <b>Salary: </b>
+                                        <div id="message_2"><?php echo $Salary;?></div>
+                                        <b>Position: </b>
+                                        <div id="message_2"><?php echo $Position; ?></div>
+                                        <b>Working Hours: </b>
+                                        <div id="message_2"><?php echo $Working_hours;?></div>
+                                        <b>Hall: </b>
+                                        <div id="message_2"><?php echo $Hall; ?></div>
+                                        <button type='button' class='btn btn-info ' data-toggle='modal' data-target='#myModal'>Edit</button>
+                                        <button type='button' class='btn btn-danger ' data-toggle='modal' data-target='#myModal_1'>Remove</button>
+                                        <div class='modal fade' id='myModal' role='dialog'>
+                                            <div class='modal-dialog'>
+                                                <!-- Modal content-->
+                                                <div class='modal-content'>
+                                                    <div class='modal-header'>
+                                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                        <h4 class='modal-title'>UPDATE DETAIL</h4>
+                                                    </div>
+                                                    <div class='panel-body'>
+                                                        <form action='updateEmployee.php' method='get'>
+                                                            <div class='form-group'>
+                                                                <label>Employee ID</label>
+                                                                <input class='form-control' name='e_id' size='100' pattern="[0-9]{4}" type='text' required value="<?php echo $ID?>">
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>First Name</label>
+                                                                <input class='form-control' name='first_name'  pattern='[A-Za-z ]+' type='text' required value="<?php echo $f_Name?>">
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Last Name</label>
+                                                                <input class='form-control' name='last_name' pattern='[A-Za-z ]+' type='text' required value="<?php echo $l_Name?>">
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Address Number</label>
+                                                                <input class='form-control' name='address_number' type='text' value="<?php echo $Address_number?>" required>
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Addrss Street</label>
+                                                                <input class='form-control' name='address_street' type='text' value="<?php echo $Address_street?>" required>
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Address City</label>
+                                                                <input class='form-control' name='address_city' type='text' value="<?php echo $Address_city?>" required>
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Address Country</label>
+                                                                <input class='form-control' name='address_country' type='text' value="<?php echo $Address_country?>" required>
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Gender</label>
+                                                                <input class='form-control' name='gender' pattern='male|female|Male|Female' required value="<?php echo $Gender?>">
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Salary</label>
+                                                                <input class='form-control' name='salary'  type='number' min=1 step="0.01" required value="<?php echo $Salary?>">
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Position</label>
+                                                                <input class='form-control' name='position' pattern='[A-Za-z ]+' required value="<?php echo $Position?>">
+                                                            </div>
+                                                            <div class='form-group'>
+                                                                <label>Working_Hours</label>
+                                                                <input class='form-control' name='working_hours'  type='number' min=0 max="24" step="0.01" required value="<?php echo $Working_hours?>">
+                                                            </div>
+                                                            <button type='submit' class='btn btn-info' name='updateEmployee'>Submit </button>
+                                                        </form>
 
-                                                        <div class='form-group'>
-                                                            <label>Date of Birth</label>
-                                                            <input class='form-control' name='date_of_birth' type='date' required value="<?php echo date($Date_of_Birth)?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Gender</label>
-                                                            <input class='form-control' name='gender' pattern='male|female|Male|Female' required value="<?php echo $Gender?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Salary</label>
-                                                            <input class='form-control' name='salary'  type='number' min=1 step="0.01" required value="<?php echo $Salary?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Position</label>
-                                                            <input class='form-control' name='position' pattern='[A-Za-z ]+' required value="<?php echo $Position?>">
-                                                        </div>
-                                                        <div class='form-group'>
-                                                            <label>Working_Hours</label>
-                                                            <input class='form-control' name='working_hours'  type='number' min=0 step="0.01" required value="<?php echo $Working_hours?>">
-                                                        </div>
-                                                        <button type='submit' class='btn btn-info' name='updateStudent'>Submit </button>
-                                                    </form>
-
+                                                    </div>
+                                                    <div class='modal-footer'>
+                                                        <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                                    </div>
                                                 </div>
-                                                <div class='modal-footer'>
-                                                    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                            </div>
+                                        </div>
+                                        <div class='modal fade' id='myModal_1' role='dialog'>
+                                            <div class='modal-dialog'>
+                                                <!-- Modal content-->
+                                                <div class='modal-content'>
+                                                    <div class='modal-header'>
+                                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                        <h4 class='modal-title'>REMOVE STUDENT</h4>
+                                                    </div>
+                                                    <div class='panel-body'>
+                                                        <form action='removeEmployee.php' method='get'>
+                                                            <p> Are you sure want to remove student <?php echo $f_Name." ".$l_Name; ?><br>
+                                                                Student ID : <input style="border-color: white" name='id' type='text' size=5 value="<?php echo $ID; ?>"> </p>
+                                                            <button type="submit" class="btn btn-info" name="YES" value="yes">YES</button>
+                                                            <button type="submit" class="btn btn-danger" name="NO" value="no">NO</button>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class='modal-footer'>
+                                                        <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,8 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php }?>
+                <?php }else{ echo '<p> No result found.. please check Student ID </p>'; }}?>
             </div>
         </div>
         <!-- /. PAGE INNER  -->

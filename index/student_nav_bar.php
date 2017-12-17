@@ -32,10 +32,7 @@
                         <a href="../Room/viewAvailableRooms.php"><i class="fa fa-square-o "></i>Available Rooms</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-square-o "></i>Vacate Room</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-square-o "></i>Change Room</a>
+                        <a href="../Student/vacateRoom.php"><i class="fa fa-square-o "></i>Vacate Room</a>
                     </li>
                 </ul>
             </li>

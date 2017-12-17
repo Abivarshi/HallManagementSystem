@@ -44,9 +44,11 @@
                             <button type="submit" class="btn btn-danger">Submit </button>
                         </form>
                     </div>
-                    <?php include '../Connect/Connect.php';
+                    <?php
+                    include '../Connect/Connect.php';
                     if (isset($_GET['ID'])){
                         $ID = $_GET['ID'];
+                        $_SESSION['sid']=$ID;
                         $q1="select first_name,last_name,address_number,address_street,address_city,address_country,gender,date_of_birth,department,balance,hall.name as hall_name,room_number from (person natural join student natural join stays) join hall using(hall_id) where person.id=$ID and year=Year(now())";
                         $result = mysqli_query($link,$q1);
                         if(mysqli_num_rows($result)>0){
@@ -130,10 +132,6 @@
                                                 <input class='form-control' name='department' pattern='[A-Za-z ]+' type='text' required value="<?php echo $Department?>">
                                             </div>
                                             <div class='form-group'>
-                                                <label>Date of Birth</label>
-                                                <input class='form-control' name='date_of_birth' type='date' required value="<?php echo date($Date_of_Birth)?>">
-                                            </div>
-                                            <div class='form-group'>
                                                 <label>Gender</label>
                                                 <input class='form-control' name='gender' pattern='male|female|Male|Female' required value="<?php echo $Gender?>">
                                             </div>
@@ -157,11 +155,11 @@
                                     </div>
                                     <div class='panel-body'>
                                         <form action='removeStudent.php' method='get'>
-                                            <p> Are you sure want to remove student <?php echo $f_Name," ",$l_Name, " (", $ID, ")"; ?> ?</p>
+                                            <p> Are you sure want to remove student <?php echo $f_Name." ".$l_Name; ?><br>
+                                            Student ID : <input style="border-color: white" name='id' type='text' size=5 value="<?php echo $ID; ?>"> </p>
                                             <button type="submit" class="btn btn-info" name="YES" value="yes">YES</button>
                                             <button type="submit" class="btn btn-danger" name="NO" value="no">NO</button>
                                         </form>
-
                                     </div>
                                     <div class='modal-footer'>
                                         <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>

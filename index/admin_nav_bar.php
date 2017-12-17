@@ -15,11 +15,13 @@
         $approvalQuery = "SELECT * from requestroom";
         $approvalQuery = $link->query($approvalQuery);
         $approvalCount = mysqli_num_rows($approvalQuery);
+        $approvalQuery_1 = "SELECT * from vacate";
+        $approvalQuery_1 = $link->query($approvalQuery_1);
+        $approvalCount_1 = mysqli_num_rows($approvalQuery_1);
         ?>
         <a href="../Admin/acceptRoom.php" class="btn btn-info" title="New Request To join HMS"><b><?php echo $approvalCount; ?> </b><i class="fa fa-envelope-o fa-2x"></i></a>
+        <a href="../Admin/vacatingRoom.php" class="btn btn-warning" title="Request To vacate HMS"><b><?php echo $approvalCount_1; ?> </b><i class="fa fa-envelope-o fa-2x"></i></a>
         <a href="../login_out/logout.php" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
-
-
     </div>
 </nav>
 <!-- /. NAV TOP  -->
