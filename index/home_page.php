@@ -23,15 +23,15 @@ include_once('../Connect/Connect.php');
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-
             </div>
+            <img src="../assets/img/logo_bar_2.png" style="width:1110px"/>
         </nav>
         <!-- /. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="home_page.php"><i class="fa fa-dashboard "></i>Dashboard</a>
+                        <a class="active-menu" href="../index/home_page.php"><i class="fa fa-dashboard "></i>Dashboard</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-desktop "></i>Rooms <span class="fa arrow"></span></a>

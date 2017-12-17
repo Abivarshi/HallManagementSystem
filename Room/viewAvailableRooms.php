@@ -161,11 +161,11 @@
                                             </div>
                                             <div class='form-group'>
                                                 <label>Last Name</label>
-                                                <input class='form-control'name='last_name' type='text'>
+                                                <input class='form-control' name='last_name' type='text'>
                                             </div>										
                                             <div class='form-group'>
                                                 <label>Address Number</label>
-                                                <input class='form-control' name='address_number'type='text'>
+                                                <input class='form-control' name='address_number' type='text'>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Addrss Street</label>
@@ -173,23 +173,23 @@
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address City</label>
-                                                <input class='form-control'name='address_city' type='text'>
+                                                <input class='form-control' name='address_city' type='text'>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Address Country</label>
-                                                <input class='form-control'name='address_country' type='text'>
+                                                <input class='form-control' name='address_country' type='text'>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Department</label>
-                                                <input class='form-control'name='department' type='text'>
+                                                <input class='form-control' name='department' type='text'>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Date of Birth</label>
-                                                <input class='form-control'name='date_of_birth' type='text'>
+                                                <input class='form-control' name='date_of_birth' type='text'>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Gender</label>
-                                                <input class='form-control'name='gender' type='text'>
+                                                <input class='form-control' name='gender' type='text'>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Email</label>

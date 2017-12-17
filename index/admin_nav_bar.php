@@ -33,7 +33,7 @@
                         <a href="../Hall/viewHall.php"><i class="fa fa-square-o "></i>View Detail</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-square-o "></i>Add Hall</a>
+                        <a href="../Hall/addHall.php"><i class="fa fa-square-o "></i>Add Hall</a>
                     </li>
                 </ul>
             </li>
