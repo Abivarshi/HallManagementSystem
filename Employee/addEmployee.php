@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hall Management</title>
+    <title>Add Employee</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -31,56 +31,54 @@
                     <form role="form"  action='addEmployee.php' method="get">
                         <div class="form-group">
                             <label>Employee ID</label>
-                            <input class="form-control" type="text" name="em_id">
+                            <input class="form-control" type="text" name="em_id" pattern="[0-9]{4}" required>
                             <label>Name</label>
-                            <input class="form-control" type="text" placeholder="first name" name="fName">
-                            <input class="form-control" type="text" placeholder="last name" name="lName">
+                            <input class="form-control" type="text" placeholder="first name" name="fName" pattern="[A-Za-z]{1,55}" required>
+                            <input class="form-control" type="text" placeholder="last name" name="lName" pattern="[A-Za-z]{1,55}" required>
                         </div>
                         <div class="form-group">
                             <label>Sex</label>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="sex" id="sexM" value="option1">Male
+                                    <input type="radio" name="sex" id="sexM" value="Male" required="required">Male
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="sex" id="sexF" value="option2">Female
+                                    <input type="radio" name="sex" id="sexF" value="Female" required="required">Female
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Date of birth</label>
-                            <input class="form-control" type="text" placeholder="yyyy/mm/dd" name="dob">
+                            <input class="form-control" placeholder="yyyy/mm/dd" type="date"  name="dob" min=<?php echo date("Y")-50 ?> required>
                         </div>
                         <div class="form-group">
                             <label>Salary</label>
-                            <input class="form-control" type="text" name="salary">
+                            <input class="form-control" type="number" name="salary" min=1 step="0.01" required>
                         </div>
                         <div class="form-group">
                             <label>Position</label>
-                            <input class="form-control" type="text" name="position">
+                            <input class="form-control" type="text" name="position" pattern="[A-Za-z]{2,55}" required>
                         </div>
                         <div class="form-group">
                             <label>Working Hours</label>
-                            <input class="form-control" type="text" name="work_h">
+                            <input class="form-control" type="number" name="work_h" min=0 max=24 step="0.01" required>
                         </div>
                         <div class="form-group">
                             <label>Address</label>
-                            <input class="form-control" type="text" placeholder="House number" name="add_no">
-                            <input class="form-control" type="text" placeholder="Street name" name="add_street">
-                            <input class="form-control" type="text" placeholder="city" name="add_city">
-                            <input class="form-control" type="text" placeholder="country" name="add_country">
+                            <input class="form-control" type="text" placeholder="House number" name="add_no" pattern="[A-Za-z0-9]{1,25}" required>
+                            <input class="form-control" type="text" placeholder="Street name" name="add_street" pattern="[A-Za-z]{2,155}" required>
+                            <input class="form-control" type="text" placeholder="city" name="add_city" pattern="[A-Za-z]{2,155}" required>
+                            <input class="form-control" type="text" placeholder="country" name="add_country" pattern="[A-Za-z]{2,155}" required>
                         </div>
                         <div class="form-group">
                             <label>Contact number</label>
-                            <input class="form-control" type="text" name="tp_num1">
+                            <input class="form-control" type="text" name="tp_num1" pattern="[0-9]{10}" required>
                             <label>Other contact number</label>
-                            <input class="form-control" type="text" name="tp_num2">
+                            <input class="form-control" type="text" name="tp_num2" pattern="[0-9]{10}" required>
                         </div>
                         <button type="submit" class="btn btn-info" name="submit">Submit </button>
-
-
                     </form>
                 </div>
             </div>

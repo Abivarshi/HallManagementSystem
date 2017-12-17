@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Assign Hall</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -25,21 +25,71 @@
                 <div class="col-md-12">
                     <h1 class="page-head-line">Assign Hall for Employee</h1>
                     <div class="panel-body">
-                        <form role="form" action="assignRoom.php" method="get">
+                        <form action="assignHall.php" method="get">
+                            <!--div class="form-group"-->
                             <div class="form-group">
-                                <label>Hall Name</label>
-                                <input class="form-control" type="text" name="hallName" value="<?php echo "hall1"; ?>" readonly>
+                                <div class="col-sm-2">
+                                    <label>Hall Name</label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control"name="hallName"required/>
+                                    <option value="">Select Here:</option>
+                                    <?php
+                                    include('../Connect/Connect.php');
+                                    $sql="SELECT name FROM hall";
+                                    $result = $link->query($sql);
+
+                                    while($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                                        <?php
+                                        // close while loop
+                                    }
+                                    ?>
+                                    </select>
+                                </div><br>
                             </div>
+
                             <div class="form-group">
                                 <label>Employee Id</label>
-                                <input class="form-control" type="text" name="id">
+                                <input class="form-control" type="text" name="id" pattern="[0-9]{4}" required>
                                 <p class="help-block">Enter Employee Id here.</p>
                             </div>
-                            <div class="form-group">
-                                <label>Date</label>
-                                <input class="form-control" type="text value="<?php echo "12/16/2017"; ?>"  name="year">
+
+                            <button type="submit" name="assignSubmit" class="btn btn-info">Assign </button>
+                            <br></br>
+                            <?php
+                            $message='';
+                            include('../Connect/Connect.php');
+
+                            if(isset($_GET['assignSubmit']))
+                            {
+                                $hall_name=$_GET['hallName'];
+                                $id=$_GET['id'];
+                                $ass_date=date("y/m/d");
+                                $hallQuery="select hall_id from hall where name='$hall_name'";
+                                $hallQuery=mysqli_query($link,$hallQuery);
+                                $hallQuery=mysqli_fetch_array($hallQuery);
+                                $hallId=$hallQuery['hall_id'];
+                                $state="paid";
+                                $query11 = "SELECT * FROM employee WHERE id='$id'";
+                                $query11 = $link->query($query11);
+                                $queryCount = mysqli_num_rows($query11);
+                                if($queryCount > 0) {
+                                    $query="insert into works(id,hall_id,date)values('$id','$hallId','$ass_date')";
+                                    $query1=mysqli_query($link,$query);
+                                    echo "<br>".'Data stored successfully'." @ ".date("Y-m-d");
+                                }
+                                else{
+                                    $message="Employee does not exit";
+                                }
+                            }
+                            if($message!=''){
+                            ?><div class="row">
+                                <div class="alert alert-info">
+                                    <?php echo $message; } ?>
+                                </div>
                             </div>
-                            <button type="submit" name="assignSubmit" class="btn btn-info">Submit </button>
                         </form>
                     </div>
                 </div>

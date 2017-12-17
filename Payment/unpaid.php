@@ -63,11 +63,11 @@
                                 <tr><?php
                                     if(isset($_GET['s_id'])){
                                         if($_GET['s_id']==$row['id']){?>
-                                            <td style="color: whitesmoke" bgcolor="#8b0000"><?php echo $i; ?></td>
-                                            <td style="color: whitesmoke" bgcolor="#8b0000"><?php echo $row['id']; ?></td>
-                                            <td style="color: whitesmoke" bgcolor="#8b0000"><?php echo $row['first_name']; ?></td>
-                                            <td style="color: whitesmoke" bgcolor="#8b0000"><?php echo $row['last_name']; ?></td>
-                                            <td style="color: whitesmoke" bgcolor="#8b0000"><?php echo $row['balance']; ?></td><?php
+                                            <td style="color: red"><b><?php echo $i; ?></b></td>
+                                            <td style="color: red"><b><?php echo $row['id']; ?></b></td>
+                                            <td style="color: red"><b><?php echo $row['first_name']; ?></b></td>
+                                            <td style="color: red"><b><?php echo $row['last_name']; ?></b></td>
+                                            <td style="color: red"><b><?php echo $row['balance']; ?></b></td><?php
                                         }else{
                                             ?>
                                             <td><?php echo $i; ?></td>

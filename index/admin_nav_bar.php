@@ -60,9 +60,6 @@
                     <li>
                         <a href="../Student/studentHistory.php"><i class="fa fa-square-o "></i>Student History</a>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-square-o "></i>Payment Detail</a>
-                    </li>
                 </ul>
             </li>
             <li>
@@ -78,7 +75,7 @@
                         <a href="../Employee/addEmployee.php"><i class="fa fa-square-o "></i>Add Employee</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-square-o "></i>Assign Hall</a>
+                        <a href="../Admin/assignHall.php"><i class="fa fa-square-o "></i>Assign Hall</a>
                     </li>
                 </ul>
             </li>
@@ -92,7 +89,7 @@
                         <a href="../Payment/unpaid.php"><i class="fa fa-square-o "></i>Unpaid Student Detail</a>
                     </li>
                     <li>
-                        <a href="recordSalary.php"><i class="fa fa-square-o "></i>Record Employee Salary</a>
+                        <a href="../Payment/addSalary.php"><i class="fa fa-square-o "></i>Record Employee Salary</a>
                     </li>
                 </ul>
             </li>

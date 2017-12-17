@@ -182,11 +182,11 @@
                                             <div class='form-group'>
                                                 <label>Department</label>
                                                 <input class='form-control'name='department' pattern='[A-Za-z ]+' type='text' required>
-                                                <p class=\"help-block\">Eg: Level x</p>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Level</label>
                                                 <input class='form-control' name='level' type='text' pattern='level 1|level 2|level 3|level 4|Level 1|Level 2|Level 3|Level 4' required>
+                                                <p class=\"help-block\">Eg: Level x</p>
                                             </div>
                                             <div class='form-group'>
                                                 <label>Date of Birth</label>
@@ -216,7 +216,6 @@
                     {
                         $query = "INSERT INTO requestroom(hall_name,id,first_name,last_name,address_number,address_street,address_city,address_country,department,level,date_of_birth,gender,email)VALUES('$_SESSION[hallName]','$_GET[id]','$_GET[first_name]','$_GET[last_name]','$_GET[address_number]','$_GET[address_street]','$_GET[address_city]','$_GET[address_country]','$_GET[department]','$_GET[level]','$_GET[date_of_birth]','$_GET[gender]','$_GET[email]')";
                         $result=mysqli_query($link,$query);
-
                     }
                     $link->close();
                     ?>

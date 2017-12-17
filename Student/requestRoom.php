@@ -62,67 +62,36 @@ include_once('../Connect/Connect.php');?><!DOCTYPE html>
                                 <label>Hall Name</label>
                             </div>
                             <div class="col-sm-8">
-                                <select class="form-control"name="hallName"/>
-                                <option value="">Select Here:</option>
-                                <?php
-                                include('../Connect/Connect.php');
-                                $sql="SELECT name FROM hall";
-                                $result = $link->query($sql);
-
-                                while($row = $result->fetch_assoc()) {
-                                    ?>
-                                    <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-
+                                <select class="form-control"name="hallName">
+                                    <option value="">Select Here:</option>
                                     <?php
-                                    // close while loop
-                                }
-                                ?>
-                                </select>
+                                    include('../Connect/Connect.php');
+                                    $sql="SELECT name FROM hall";
+                                    $result = $link->query($sql);
+                                    while($row = $result->fetch_assoc()) {
+                                        ?>
+                                        <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
 
+                                        <?php
+                                        // close while loop
+                                    }
+                                    ?>
+                                </select>
                             </div>
                             <div class="col-sm-2">
                                 <button type="submit" name="submit" class="btn btn-info">Submit </button>
-                                <!--
-                                <button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Request Room</button>
-
-                                <!-- Modal
-                                  <div class="modal fade" id="myModal" role="dialog">
-                                    <div class="modal-dialog">
-
-                                      <!-- Modal content
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h4 class="modal-title">Modal Header</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                          <p>Some text in the modal.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                      </div>
-
-                                    </div>
-                                  </div>-->
-
                             </div>
-
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-md-12">
-
                     <?php
                     include('../Connect/Connect.php');
-                    if(isset($_get['submit']) && !empty($_get["hallName"]))
+                    if(isset($_GET['submit']))
                     {
-                        $sql = "select room_number,(room_capacity-(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)) as vacancy from room natural join hall where name='$_get[hallName]' and room_capacity>(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)";
+                        $sql = "select room_number,(room_capacity-(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)) as vacancy from room natural join hall where name='$_GET[hallName]' and room_capacity>(select count(*) from stays where stays.hall_id=room.hall_id and stays.room_number=room.room_number)";
                         $result = $link->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -141,7 +110,7 @@ include_once('../Connect/Connect.php');?><!DOCTYPE html>
 								  <div class='modal-content'>
 									<div class='modal-header'>
 									  <button type='button' class='close' data-dismiss='modal'>&times;</button>
-									  <h4 class='modal-title'>Please enter your details to request room in ". $_get["hallName"]."</h4>
+									  <h4 class='modal-title'>Please enter your details to request room in ". $_GET["hallName"]."</h4>
 									</div>
 									<div class='panel-body'>
 										<form action='requestRoom.php' method='get'>
@@ -190,11 +159,11 @@ include_once('../Connect/Connect.php');?><!DOCTYPE html>
                             echo "No Rooms Available";
                         }
                     }
-                    if(isset($_get['requestRoom']))
+                    if(isset($_GET['requestRoom']))
                     {
                         $time = time();
 
-                        $query = "INSERT INTO requestroom(student_name,id,department,address,email,other_info)VALUES('$_get[name]','$_get[id]','$_get[department]','$_get[address]','$_get[email]','$_get[other_info]')";
+                        $query = "INSERT INTO requestroom(student_name,id,department,address,email,other_info)VALUES('$_GET[name]','$_GET[id]','$_GET[department]','$_GET[address]','$_GET[email]','$_GET[other_info]')";
                         $result=mysqli_query($link,$query);
 
                     }

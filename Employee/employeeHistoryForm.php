@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student</title>
+    <title>Employee History</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/css/bootstrap.css" rel="stylesheet" />
@@ -26,12 +26,12 @@
                     <h1 class="page-head-line">Employee History</h1>
                 </div>
                 <div class="panel-body">
-                    <form action="employeeHistory.php" method="get">
+                    <form action="employeeHistoryForm.php" method="get">
                         <div class="form-group">
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <label>Employee ID </label>
-                                    <input class="form-control" type="text" name="e_id">
+                                    <input class="form-control" type="text" name="e_id" pattern="[0-9]{4}" required>
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="submit" name="submit" class="btn btn-info">Submit </button>
@@ -39,6 +39,38 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Employee ID</th><th>Hall ID</th><th>Date</th></tr></thead>
+                            <?php
+                                include '../Connect/Connect.php';
+                                $message='';
+                                if(isset($_GET['submit'])){
+                                    $e_ID=$_GET['e_id'];
+                                    $query11 = "SELECT * FROM employee WHERE id='$e_ID'";
+                                    $query11 = $link->query($query11);
+                                    $queryCount = mysqli_num_rows($query11);
+                                    if($queryCount > 0) {
+                                        $sql="select id, first_name, last_name, hall_id, date from works NATURAL JOIN person where id=$e_ID ORDER by date desc";
+                                        $result = $link->query($sql);
+                                        while($row = $result->fetch_assoc()) {
+                                            echo "<tr><td>" . $row["id"]."</td><td>" . $row["hall_id"]. "</td><td>" . $row["date"]. "</td></tr>";
+                                        }
+                                    }
+                                    else{
+                                        $message="Employee does not exit";
+                                    }
+                                }
+                                if($message!=''){
+                            ?><div class="row">
+                                <div class="alert alert-info">
+                                    <?php echo $message; } ?>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
